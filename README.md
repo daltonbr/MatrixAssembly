@@ -3,10 +3,10 @@ A simple project in C and Assembly (AT&amp;T and Intel) for operating with Matri
 This is a final project in an Assembly Language course in University of Sao Paulo (UNESP - Brazil)
 
 ## Authors
-Bruno Vedoveto - @bleandro
+Bruno Vedoveto - @bleandro  
 Dalton Lima - @daltonbr  
-Lucas Pinheiro - @lucaspin
-Wesley Utsonomya - @ottozinho  
+Lucas Pinheiro - @lucaspin  
+Wesley Utsonomya - @ottozinho    
 
 ## English Version
 ##### Objectives:
