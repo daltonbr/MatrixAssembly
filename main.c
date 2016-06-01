@@ -13,7 +13,7 @@ The matrices must be static instantiates in C, at compiling-time.
 These matrix must be ramdonly POPULATED, not randonly sized. In relation to L,
 its good that the size could vary in fixed intervals (5x5, 10x10, 50x50,
  100x100, etc).
-
+Group 1: (a * 2b) - returning the greater value in the main diagonal.
 */
 #include <stdio.h>
 #include <stdlib.h> //malloc
@@ -21,11 +21,12 @@ its good that the size could vary in fixed intervals (5x5, 10x10, 50x50,
 
 #define L 5
 
-void printMatrix(int matrix[L][L]);
-void printDiagonal(int matrix[L][L]);
-void randomPopulateMatrix(int matrix[L][L]);
+  void printMatrix(int matrix[L][L]);
+  void printDiagonal(int matrix[L][L]);
+  void randomPopulateMatrix(int matrix[L][L]);
+  int greaterValueInDiagonal(int matrix[L][L]);
 
-int main() {
+int main(void) {
 
   int a[L][L];
   int b[L][L];
@@ -56,7 +57,8 @@ int main() {
   randomPopulateMatrix(b);
   printf("Printing B Matrix: \n");
   printMatrix(b);
-  return 0;
+  int greaterInDiagonal = greaterValueInDiagonal(b);
+  printf("Greater in Diagonal: %d\n", greaterInDiagonal);
 }
 
 void printMatrix(int matrix[L][L]) {
@@ -85,4 +87,15 @@ void randomPopulateMatrix(int matrix[L][L]) {
       matrix[i][j] = rand() % 100;    //returns a pseudo-random integer between 0 and 99
     }
   }
+}
+
+int greaterValueInDiagonal(int matrix[L][L]) {
+  int i = 0, greaterElement;
+    greaterElement = matrix[i][i];
+    for (i = 1; i < L; i++) {
+      if (greaterElement < matrix[i][i]) {
+        greaterElement = matrix[i][i];
+      }
+    }
+  return greaterElement;
 }
