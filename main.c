@@ -9,80 +9,80 @@ Description:
 Consider three matrices of integers A, B, C and L x L size, defined in C
 language (these matrices could be randomly generated). Implement three
 equivalent functions (all functions must run in C language application):
+The matrices must be static instantiates in C, at compiling-time.
+These matrix must be ramdonly POPULATED, not randonly sized. In relation to L,
+its good that the size could vary in fixed intervals (5x5, 10x10, 50x50,
+ 100x100, etc).
+
 */
 #include <stdio.h>
 #include <stdlib.h> //malloc
-#define L 3
+#include <time.h>  // srand
 
-void printMatrix(int *matrix);
-void printDiagonal(int *matrix);
-int getElementByIndex(int i, int j, int *matrix);
-void setElementsByIndex(int value, int i, int j, int *matrix);
+#define L 5
+
+void printMatrix(int matrix[L][L]);
+void printDiagonal(int matrix[L][L]);
+void randomPopulateMatrix(int matrix[L][L]);
 
 int main() {
+
+  int a[L][L];
+  int b[L][L];
+  int c[L][L];
+
+  int i, j, r;
+  srand(time(NULL));
+
   printf("Matrix Operations in Assembly!\n");
 
-  int* a = malloc(L*L*sizeof(int));
-
-  /* populating matrix with values
+  /* populating matrix with values not random
     00 01 02
-    03 04 05
-    06 07 08
+    10 11 12
+    20 21 22
   */
-  int i, j;
-  for (i = 0; i < L*L; i++) {
-        *(a+i) = i;;
+  for (i = 0; i < L; i++) {
+    for (j = 0; j < L; j++) {
+        a[i][j] = (i*10)+j;
+    }
   }
 
-  /* getting an element by its index */
-  int element = getElementByIndex(2, 2, a);
-  printf("getElementByIndex: %d\n", element);
-
-  /* setting an element by its index */
-  setElementsByIndex(99, 2, 2, a);
-  element = getElementByIndex(2, 2, a);
-  printf("getElementByIndex: %d\n", element);
-
-  printf("Printing a Matrix %dx%d\n", L, L);
+  printf("\nPrinting Matrix a %dx%d\n", L, L);
   printMatrix(a);
 
-  printf("Printing Diagonal: \n");
+  printf("\nPrinting Diagonal: \n");
   printDiagonal(a);
+
+  randomPopulateMatrix(b);
+  printf("Printing B Matrix: \n");
+  printMatrix(b);
   return 0;
 }
 
-int getElementByIndex(int i, int j, int *matrix) {
-  if (((i+1) * (j+1)) > (L*L)) {
-      fprintf(stderr, "Index Out of Bounds Error!\n");
-      exit(-1);  //failure
-  }
-  int output = *(matrix+(L*i + j));
-  return output;
-}
-
-void setElementsByIndex(int value, int i, int j, int *matrix) {
-  if (((i+1) * (j+1)) > (L*L)) {
-      fprintf(stderr, "Index Out of Bounds Error!\n");
-      exit(-1);  //failure
-  }
-  *(matrix+(L*i + j)) = value;
-}
-
-void printMatrix(int *matrix) {
+void printMatrix(int matrix[L][L]) {
   int i, j, tempElement;
   for (i = 0; i < L ; i++) {
     for (j = 0; j < L; j++) {
-      tempElement = getElementByIndex(i, j, matrix);
+      tempElement = matrix[i][j];
       printf(" [%d%d]: (%d) |", i, j, tempElement);
     }
     printf("\n");
   }
 }
 
-void printDiagonal(int *matrix) {
+void printDiagonal(int matrix[L][L]) {
   int i, tempElement;
     for (i = 0; i < L; i++) {
-      tempElement = getElementByIndex(i, i, matrix);
+      tempElement = matrix[i][i];
       printf(" [%d%d]: (%d) |", i, i, tempElement);
+  }
+}
+
+void randomPopulateMatrix(int matrix[L][L]) {
+  int i, j, tempElement;
+  for (i = 0; i < L ; i++) {
+    for (j = 0; j < L; j++) {
+      matrix[i][j] = rand() % 100;    //returns a pseudo-random integer between 0 and 99
+    }
   }
 }
