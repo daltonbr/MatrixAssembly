@@ -2,8 +2,10 @@
 https://github.com/daltonbr/MatrixAssembly
 
 Authors:
+Bruno Vedovetto @bleandro
 Dalton Lima @daltonbr
 Lucas Pinheiro @lucaspin
+Wesley Otto @ottozinho
 
 Description:
 Consider three matrices of integers A, B, C and L x L size, defined in C
@@ -19,12 +21,14 @@ Group 1: (a * 2b) - returning the greater value in the main diagonal.
 #include <stdlib.h> //malloc
 #include <time.h>  // srand
 
-#define L 5
+#define L 3
 
   void printMatrix(int matrix[L][L]);
   void printDiagonal(int matrix[L][L]);
   void randomPopulateMatrix(int matrix[L][L]);
   int greaterValueInDiagonal(int matrix[L][L]);
+  void scalarTimesMatrix (int _scalar, int matrix[L][L], int outputMatrix[L][L]);
+  void matrixTimesMatrix (int firstMatrix[L][L], int secondMatrix[L][L], int outputMatrix[L][L]);
 
 int main(void) {
 
@@ -35,30 +39,34 @@ int main(void) {
   int i, j, r;
   srand(time(NULL));
 
-  printf("Matrix Operations in Assembly!\n");
+  printf("--== Matrix Operations in Assembly! ==--\n");
+  printf("* All matrices bellow has a fixed [%dx%d] size\n",L, L);
+  printf("* They are randomly populate with integers between 0 and 99\n");
+  printf("* We calculate (a*2b)\n");
+  printf("* We return the greater element from the main diagonal");
 
-  /* populating matrix with values not random
-    00 01 02
-    10 11 12
-    20 21 22
-  */
-  for (i = 0; i < L; i++) {
-    for (j = 0; j < L; j++) {
-        a[i][j] = (i*10)+j;
-    }
-  }
-
-  printf("\nPrinting Matrix a %dx%d\n", L, L);
+  printf("\nPrinting 'a' matrix\n");
+  randomPopulateMatrix(a);
   printMatrix(a);
 
-  printf("\nPrinting Diagonal: \n");
-  printDiagonal(a);
-
   randomPopulateMatrix(b);
-  printf("Printing B Matrix: \n");
+  printf("\nPrinting 'b' matrix: \n");
   printMatrix(b);
-  int greaterInDiagonal = greaterValueInDiagonal(b);
-  printf("Greater in Diagonal: %d\n", greaterInDiagonal);
+
+  /* (2b) */
+  printf("\nScalar (2) times 'b' matrix\n");
+  int scalar = 2;
+  int bPlus2[L][L], outputMatrix[L][L];
+  scalarTimesMatrix(scalar, b, bPlus2);
+  printMatrix(bPlus2);
+
+  /* (a * 2b) */
+  matrixTimesMatrix(a, bPlus2, outputMatrix);
+  printf("\n(a * 2b) = \n");
+  printMatrix(outputMatrix);
+
+  int greaterInDiagonal = greaterValueInDiagonal(outputMatrix);
+  printf("Greater Element in Diagonal: %d\n", greaterInDiagonal);
 }
 
 void printMatrix(int matrix[L][L]) {
@@ -98,4 +106,27 @@ int greaterValueInDiagonal(int matrix[L][L]) {
       }
     }
   return greaterElement;
+}
+
+/* void or return an outputMatrix */
+void scalarTimesMatrix (int _scalar, int matrix[L][L], int outputMatrix[L][L]) {
+  int i, j;
+  for (i = 0; i < L ; i++) {
+    for (j = 0; j < L; j++) {
+      outputMatrix[i][j] = _scalar * matrix[i][j];
+    }
+  }
+}
+
+void matrixTimesMatrix (int firstMatrix[L][L], int secondMatrix[L][L], int outputMatrix[L][L]) {
+  int i, j, k, accumulator;
+  for (i = 0; i < L ; i++) {
+    for (j = 0; j < L; j++) {
+      accumulator = 0;
+      for (k = 0; k < L ; k++) {
+        accumulator += firstMatrix[i][k] * secondMatrix[k][j];
+      }
+      outputMatrix[i][j] = accumulator;
+    }
+  }
 }
