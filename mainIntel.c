@@ -42,6 +42,7 @@ int main(void) {
   int a[L][L];
   int b[L][L];
   int outputMatrix[L][L];
+  int bTimes2[L][L];
 
   int i, j, r;
   srand(time(NULL));
@@ -71,7 +72,6 @@ int main(void) {
   //   printf("Valor da soma %d \n", r);
   // }
 
-
     int greaterAssembly = 0;
     extern int greaterInDiagonal_asm (int, int *);
     greaterAssembly = greaterInDiagonal_asm(L, *a);
@@ -81,10 +81,15 @@ int main(void) {
      //scalarTimesMatrix(2, b, outputMatrix);
 
      extern int scalarTimesMatrix_asm (int, int, int *, int *);
-     scalarTimesMatrix_asm(L, 2, *b, *outputMatrix);
+     scalarTimesMatrix_asm(L, 2, *b, *bTimes2);
      printf("\n(2b) =\n");
-     printMatrix(outputMatrix);
+     printMatrix(bTimes2);
 
+     extern int matrixTimesMatrix_asm (int, int *, int *, int *);
+     int test;
+     test = matrixTimesMatrix_asm(L, *a, *bTimes2, *outputMatrix);
+     printf("\n(a * 2b) = %d\n", test);
+     printMatrix(outputMatrix);
 
   // int greaterValueInDiagonal(int matrix[L][L]) {
   //   int i = 0, greaterElement;
