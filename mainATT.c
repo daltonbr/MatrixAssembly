@@ -53,66 +53,34 @@ int main(void) {
   printf("* We calculate (a*2b)\n");
   printf("* We return the greater element from the main diagonal\n");
 
-//  printf("\nPrinting 'a' matrix\n");
+  printf("\nPrinting 'a' matrix\n");
   randomPopulateMatrix(a);
   printMatrix(a);
 
-/*
+  int greaterAssembly = 0;
+  extern int greaterInDiagonal_s (int, int *);
+  greaterAssembly = greaterInDiagonal_s(L, *a);
+  printf("[AT&T]Greater Element in 'a' matrix's diagonal: %d\n", greaterAssembly);
+
   randomPopulateMatrix(b);
   printf("\nPrinting 'b' matrix: \n");
   printMatrix(b);
-  printf("\nPrinting 'outputMatrix' matrix: \n");
-  randomPopulateMatrix(outputMatrix);
+
+  /* (2*b) */
+  extern int scalarTimesMatrix_s (int, int, int *, int *);
+  scalarTimesMatrix_s(L, 2, *b, *bTimes2);
+  printf("\nPrinting 2 * 'b' matrix: \n");
+  printMatrix(bTimes2);
+
+/*
+  // [WIP] matrixTimesMatrix_s
+  extern int matrixTimesMatrix_s (int, int *, int *, int *);
+  int test;
+  test = matrixTimesMatrix_s(L, *a, *bTimes2, *outputMatrix);
+  printf("\n(a * 2b) = %d\n", test);
   printMatrix(outputMatrix);
 
 */
-
-    int greaterAssembly = 0;
-    extern int greaterInDiagonal_s (int, int *);
-    greaterAssembly = greaterInDiagonal_s(L, *a);
-    printf("[AT&T]Greater Element in Diagonal: %d\n", greaterAssembly);
-
-     /* (a * 2b) */
-     //scalarTimesMatrix(2, b, outputMatrix);
-/*
-     extern int scalarTimesMatrix_asm (int, int, int *, int *);
-     scalarTimesMatrix_asm(L, 2, *b, *bTimes2);
-     printf("\n(2b) =\n");
-     printMatrix(bTimes2);
-
-     extern int matrixTimesMatrix_asm (int, int *, int *, int *);
-     int test;
-     test = matrixTimesMatrix_asm(L, *a, *bTimes2, *outputMatrix);
-     printf("\n(a * 2b) = %d\n", test);
-     printMatrix(outputMatrix);
-
-*/
-  // int greaterValueInDiagonal(int matrix[L][L]) {
-  //   int i = 0, greaterElement;
-  //     greaterElement = matrix[i][i];
-  //     for (i = 1; i < L; i++) {
-  //       if (greaterElement < matrix[i][i]) {
-  //         greaterElement = matrix[i][i];
-  //       }
-  //     }
-  //   return greaterElement;
-  // }
-  // /* (2b) */
-  // printf("\nScalar (2) times 'b' matrix\n");
-  // int scalar = 2;
-  // int bPlus2[L][L], outputMatrix[L][L];
-  // scalarTimesMatrix(scalar, b, bPlus2);
-  // printMatrix(bPlus2);
-  //
-  // /* (a * 2b) */
-  // matrixTimesMatrix(a, bPlus2, outputMatrix);
-  // printf("\n(a * 2b) = \n");
-  // printMatrix(outputMatrix);
-  //
-  // int greaterInDiagonal = greaterValueInDiagonal(outputMatrix);
-  // printf("Greater Element in Diagonal: %d\n", greaterInDiagonal);
-  //
-
 }
 
 void printMatrix(int matrix[L][L]) {
