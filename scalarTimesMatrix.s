@@ -20,9 +20,9 @@ scalarTimesMatrix_s:
 
 loop:
     ; counter ecx (L*L)-1 ~ 0
-    mov (%esi + 4(%ecx)), %eax ; iterating multiples of 4
+    mov (%esi + (%ecx*4)), %eax ; iterating multiples of 4
     mul %bx                     ; scalar * ax
-    mov %eax, (%edi + 4(%ecx))  ; set the correspondent outputMatrix
+    mov %eax, (%edi + (%ecx*4))  ; set the correspondent outputMatrix
     dec ecx
 jns loop  ; loop L*L times - (do while)
 
