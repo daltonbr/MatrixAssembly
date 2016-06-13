@@ -22,7 +22,7 @@ loop:
     /* counter ecx (L*L)-1 ~ 0 */
     mov (%esi,%ecx,0x4),%eax /* iterating multiples of 4 */
     mul %bx                     /* scalar * ax */
-    mov (%edi,%ecx,0x4),%eax  /* set the correspondent outputMatrix */
+    mov %eax, (%edi,%ecx,0x4)  /* set the correspondent outputMatrix */
     dec %ecx
 jns loop  /* loop L*L times - (do while) */
 
